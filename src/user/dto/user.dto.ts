@@ -41,5 +41,4 @@ export class UserDto {
   @IsNotEmpty()
   @IsIn(['Approved', 'Rejected', 'Pending'])
   status: string;
-
 }

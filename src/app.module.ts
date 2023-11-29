@@ -6,6 +6,7 @@ import { TypeOrmConfig, configuration } from './config/typeorm.config';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { CampaignModule } from './campaign/campaign.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CampaignModule } from './campaign/campaign.module';
     TypeOrmModule.forRoot(TypeOrmConfig),
     UserModule,
     CampaignModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
