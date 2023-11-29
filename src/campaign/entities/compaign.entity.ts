@@ -43,9 +43,6 @@ export class Campaign {
   @Column({ name: 'end_time' })
   endTime: Date;
 
-  @Column({ name: 'current_Donate' })
-  currentDonate: string;
-
   @Column({ type: 'enum', enum: PeroriyEnum })
   preority: string;
 

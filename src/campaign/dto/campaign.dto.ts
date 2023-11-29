@@ -57,10 +57,6 @@ export class CreateCampaignDto {
   @IsDateString()
   endTime: Date;
 
-  @IsOptional()
-  @IsString()
-  currentDonate?: string;
-
   @IsNotEmpty()
   @IsEnum(PeroriyEnum)
   preority: string;

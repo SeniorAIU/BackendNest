@@ -6,10 +6,10 @@ export class UserDto {
   name: string;
 
   @IsNotEmpty()
-  Email: string;
+  email: string;
 
-  @Expose({ name: 'birthDate' })
-  birth_date: Date;
+  @IsNotEmpty()
+  birthDate: Date;
 
   @IsOptional()
   @IsIn(['MALE', 'FEMALE'])
@@ -21,10 +21,10 @@ export class UserDto {
   @IsOptional()
   @IsNotEmpty()
   @Expose({ name: 'phoneNumber' })
-  phone_number: string;
+  phoneNumber: string;
 
   @IsNotEmpty()
-  hobbies: Array<string>;
+  habbies: Array<string>;
 
   @IsNotEmpty()
   type: string;
@@ -35,10 +35,11 @@ export class UserDto {
   @IsNotEmpty()
   country: string;
 
+  @IsOptional()
+  fakeName: string;
+
   @IsNotEmpty()
   @IsIn(['Approved', 'Rejected', 'Pending'])
   status: string;
 
-  @Expose({ name: 'fakeName' })
-  fake_name: string;
 }
