@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { CampaignModule } from './campaign/campaign.module';
 import { OrderModule } from './order/order.module';
+import { OrgModule } from './org/org.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { OrderModule } from './order/order.module';
     UserModule,
     CampaignModule,
     OrderModule,
+    OrgModule,
   ],
   controllers: [AppController],
   providers: [AppService],
