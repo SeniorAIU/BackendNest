@@ -1,8 +1,11 @@
 import { StatusEnum } from 'src/enum/status-enum';
+import { ORG } from 'src/org/entities/org.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -29,4 +32,11 @@ export class Order {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @Column({ name: 'org_id' })
+  orgId: string;
+
+  @ManyToOne(() => ORG)
+  @JoinColumn({ name: 'org_id' })
+  org: ORG;
 }

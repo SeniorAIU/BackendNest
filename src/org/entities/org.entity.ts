@@ -1,4 +1,5 @@
 import { Campaign } from 'src/campaign/entities/compaign.entity';
+import { Order } from 'src/order/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
@@ -53,4 +54,8 @@ export class ORG {
   @OneToMany(() => Campaign, (campaign) => campaign.org)
   @JoinColumn({ name: 'org_id' }) // This is the foreign key in the Campaign table
   campaigns: Campaign[];
+
+  @OneToMany(() => Order, (order) => order.org)
+  @JoinColumn({ name: 'order_id' }) // This is the foreign key in the Campaign table
+  orders: Order[];
 }
