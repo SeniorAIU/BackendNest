@@ -1,5 +1,11 @@
 import { StatusEnum } from 'src/enum/status-enum';
-import { IsNotEmpty, IsNumber, IsString, IsEnum, IsUUID } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  IsEnum,
+  IsUUID,
+} from 'class-validator';
 
 export class OrderDto {
   @IsNotEmpty()
