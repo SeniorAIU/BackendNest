@@ -8,14 +8,14 @@ import {
   Post,
 } from '@nestjs/common';
 import { CampaignService } from './campaign.service';
-import { CreateCampaignDto } from './dto/campaign.dto';
+import { CreateCampaignDto, UpdateCampaignDto } from './dto/campaign.dto';
 
 @Controller('campaign')
 export class CampaignController {
   constructor(private readonly campaignService: CampaignService) {}
 
   @Get()
-  getcampaign(): string {
+  getcampaign() {
     return this.campaignService.getcampaign();
   }
 
@@ -30,7 +30,7 @@ export class CampaignController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoleDto: CreateCampaignDto) {
+  update(@Param('id') id: string, @Body() updateRoleDto: UpdateCampaignDto) {
     return this.campaignService.update(id, updateRoleDto);
   }
 

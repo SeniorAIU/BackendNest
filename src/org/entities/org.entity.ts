@@ -1,7 +1,10 @@
+import { Campaign } from 'src/campaign/entities/compaign.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -46,4 +49,8 @@ export class ORG {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToMany(() => Campaign, (campaign) => campaign.org)
+  @JoinColumn({ name: 'org_id' }) // This is the foreign key in the Campaign table
+  campaigns: Campaign[];
 }

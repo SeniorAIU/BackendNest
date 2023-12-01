@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Campaign } from './entities/compaign.entity';
 import { Repository } from 'typeorm';
-import { CreateCampaignDto } from './dto/campaign.dto';
+import { CreateCampaignDto, UpdateCampaignDto } from './dto/campaign.dto';
 
 @Injectable()
 export class CampaignService {
@@ -10,8 +10,9 @@ export class CampaignService {
     private campaingRepository: Repository<Campaign>,
   ) {}
 
-  getcampaign(): any {
-    return this.campaingRepository.find();
+  async getcampaign() {
+    const result = await this.campaingRepository.find();
+    return result;
   }
 
   async createcampaign(data: CreateCampaignDto): Promise<any> {
@@ -19,11 +20,13 @@ export class CampaignService {
     return user;
   }
 
-  findOne(id: string) {
-    return this.campaingRepository.findOneBy({ id });
+  async findOne(id: string) {
+    const result = await this.campaingRepository.findOneBy({ id });
+    console.log(result);
+    return result;
   }
 
-  update(id: string, updateCampaignDto: CreateCampaignDto) {
+  update(id: string, updateCampaignDto: UpdateCampaignDto) {
     return this.campaingRepository.update(id, updateCampaignDto);
   }
 

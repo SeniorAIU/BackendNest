@@ -84,4 +84,79 @@ export class CreateCampaignDto {
   @IsNotEmpty()
   @IsString()
   licenseNumber: string;
+
+  @IsString()
+  @IsUUID()
+  orgId: string;
+}
+
+export class UpdateCampaignDto {
+  @IsOptional()
+  @IsString()
+  name: string;
+
+  @IsOptional()
+  @IsUrl()
+  image: string;
+
+  @IsOptional()
+  @IsNumber()
+  target: number;
+
+  @IsOptional()
+  @IsString()
+  title: string;
+
+  @IsOptional()
+  @IsNumber()
+  amount: number;
+
+  @IsOptional()
+  @IsString()
+  country: string;
+
+  @IsOptional()
+  @IsString()
+  note: string;
+
+  @IsOptional()
+  @IsString()
+  type: string;
+
+  @IsOptional()
+  @IsDateString()
+  startTime: Date;
+
+  @IsOptional()
+  @IsDateString()
+  endTime: Date;
+
+  @IsOptional()
+  @IsEnum(PeroriyEnum)
+  preority: string;
+
+  @IsOptional()
+  @IsEnum(StatusEnum)
+  status: string;
+
+  @IsOptional()
+  @IsArray()
+  category?: Array<string>;
+
+  @IsOptional()
+  @IsString()
+  address: string;
+
+  @IsOptional()
+  @IsString()
+  feedback: string;
+
+  @IsOptional()
+  rate: number;
+
+  @IsOptional()
+  licenseNumber: string;
+
+  @IsOptional()
+  org_id: string;
 }

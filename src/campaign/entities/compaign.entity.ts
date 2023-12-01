@@ -1,12 +1,16 @@
 import { PeroriyEnum } from 'src/enum/perority-enum';
 import { StatusEnum } from 'src/enum/status-enum';
+import { ORG } from 'src/org/entities/org.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+// import { Exclude } from 'class-transformer';
 
 @Entity('campaign')
 export class Campaign {
@@ -69,4 +73,11 @@ export class Campaign {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @Column({ name: 'org_id' })
+  orgId: string;
+
+  @ManyToOne(() => ORG)
+  @JoinColumn({ name: 'org_id' }) // This is the foreign key in the Campaign table
+  org: ORG;
 }
