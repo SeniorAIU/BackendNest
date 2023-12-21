@@ -24,6 +24,11 @@ export class CampaignController {
     return this.campaignService.findOne(id);
   }
 
+  @Get('/campaign/search')
+  findOneBy(@Body() data: any) {
+    return this.campaignService.findOneby(data);
+  }
+
   @Post()
   createcampaign(@Body() data: CreateCampaignDto): any {
     return this.campaignService.createcampaign(data);

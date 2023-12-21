@@ -26,6 +26,10 @@ export class CampaignService {
     return result;
   }
 
+  findOneby(data: any) {
+    return this.campaingRepository.findBy(data);
+  }
+
   update(id: string, updateCampaignDto: UpdateCampaignDto) {
     return this.campaingRepository.update(id, updateCampaignDto);
   }

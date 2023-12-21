@@ -8,7 +8,7 @@ export class UserDto {
   @IsNotEmpty()
   email: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   birthDate: Date;
 
   @IsOptional()
@@ -18,21 +18,20 @@ export class UserDto {
   @IsOptional()
   job: string;
 
-  @IsOptional()
   @IsNotEmpty()
   @Expose({ name: 'phoneNumber' })
   phoneNumber: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   habbies: Array<string>;
 
   @IsNotEmpty()
   type: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   address: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   country: string;
 
   @IsOptional()

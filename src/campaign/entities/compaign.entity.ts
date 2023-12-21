@@ -7,10 +7,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 // import { Exclude } from 'class-transformer';
+import { Transaction } from 'src/transaction/entities/transaction.entity';
 
 @Entity('campaign')
 export class Campaign {
@@ -80,4 +82,8 @@ export class Campaign {
   @ManyToOne(() => ORG)
   @JoinColumn({ name: 'org_id' }) // This is the foreign key in the Campaign table
   org: ORG;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.camp)
+  @JoinColumn({ name: 'camp_id' })
+  transaction: Transaction[];
 }

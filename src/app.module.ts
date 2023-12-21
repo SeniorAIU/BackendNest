@@ -8,6 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { CampaignModule } from './campaign/campaign.module';
 import { OrderModule } from './order/order.module';
 import { OrgModule } from './org/org.module';
+import { NeedyModule } from './needy/needy.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { OrgModule } from './org/org.module';
     CampaignModule,
     OrderModule,
     OrgModule,
+    NeedyModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
