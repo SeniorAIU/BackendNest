@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { AdverImageService } from './adver-image.service';
-import { CommentsDto } from 'src/comment/dto/comment.dto';
 
 @Controller('adver-image')
 export class AdverImageController {
