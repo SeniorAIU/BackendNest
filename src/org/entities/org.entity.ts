@@ -1,4 +1,5 @@
 import { Campaign } from 'src/campaign/entities/compaign.entity';
+import { Oppertunity } from 'src/oppertunity/entities/oppertunity.entity';
 import { Order } from 'src/order/entities/order.entity';
 import {
   Column,
@@ -54,6 +55,10 @@ export class ORG {
   @OneToMany(() => Campaign, (campaign) => campaign.org)
   @JoinColumn({ name: 'org_id' }) // This is the foreign key in the Campaign table
   campaigns: Campaign[];
+
+  @OneToMany(() => Oppertunity, (oppertunity) => oppertunity.org)
+  @JoinColumn({ name: 'org_id' }) // This is the foreign key in the Campaign table
+  oppertunity: Oppertunity[];
 
   @OneToMany(() => Order, (order) => order.org)
   @JoinColumn({ name: 'order_id' }) // This is the foreign key in the Campaign table

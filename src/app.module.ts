@@ -10,6 +10,9 @@ import { OrderModule } from './order/order.module';
 import { OrgModule } from './org/org.module';
 import { NeedyModule } from './needy/needy.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { OppertunityModule } from './oppertunity/oppertunity.module';
+import { CommentsModule } from './comment/comment.module';
+import { AdverImageModule } from './adver-image/adver-image.module';
 
 @Module({
   imports: [
@@ -24,6 +27,9 @@ import { TransactionModule } from './transaction/transaction.module';
     OrgModule,
     NeedyModule,
     TransactionModule,
+    OppertunityModule,
+    CommentsModule,
+    AdverImageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

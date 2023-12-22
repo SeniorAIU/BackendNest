@@ -1,3 +1,4 @@
+import { Comments } from 'src/comment/entities/comment.entity';
 import { Transaction } from 'src/transaction/entities/transaction.entity';
 import {
   Column,
@@ -56,4 +57,12 @@ export class User {
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   @JoinColumn({ name: 'user_id' })
   transaction: Transaction[];
+
+  @OneToMany(() => Comments, (user) => user.user)
+  @JoinColumn({ name: 'user_id' })
+  user: Comments[];
+
+  @OneToMany(() => Comments, (campaign) => campaign.cam)
+  @JoinColumn({ name: 'user_id' })
+  cam: Comments[];
 }
