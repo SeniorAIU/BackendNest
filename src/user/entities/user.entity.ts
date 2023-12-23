@@ -21,6 +21,9 @@ export class User {
   @Column({ name: 'email', unique: true })
   email: string;
 
+  @Column()
+  password: string;
+
   @Column({ name: 'fake_name', nullable: true })
   fakeName: string;
 
@@ -31,7 +34,7 @@ export class User {
   job: string;
 
   @Column({ name: 'phone_number', nullable: true })
-  phone: string;
+  phone_number: string;
 
   @Column({ type: 'jsonb', default: '[]' })
   habbies: Array<string>;

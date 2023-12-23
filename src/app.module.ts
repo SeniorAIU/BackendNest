@@ -13,6 +13,7 @@ import { TransactionModule } from './transaction/transaction.module';
 import { OppertunityModule } from './oppertunity/oppertunity.module';
 import { CommentsModule } from './comment/comment.module';
 import { AdverImageModule } from './adver-image/adver-image.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AdverImageModule } from './adver-image/adver-image.module';
     OppertunityModule,
     CommentsModule,
     AdverImageModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

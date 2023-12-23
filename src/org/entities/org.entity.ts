@@ -28,6 +28,9 @@ export class ORG {
   @Column()
   address: string;
 
+  @Column()
+  password: string;
+
   @Column({ name: 'phone_number' })
   phoneNumber: string;
 

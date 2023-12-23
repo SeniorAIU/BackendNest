@@ -14,6 +14,9 @@ export class OrgDto {
   @IsOptional()
   address: string;
 
+  @IsNotEmpty()
+  password: string;
+
   @IsOptional()
   image: string;
 

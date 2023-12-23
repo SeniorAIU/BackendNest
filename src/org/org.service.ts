@@ -26,6 +26,10 @@ export class OrgService {
     return this.orgRepository.findOneBy({ id });
   }
 
+  findOneEmail(email: string) {
+    return this.orgRepository.findOneBy({ email });
+  }
+
   update(id: string, updateRoleDto: UpdateOrgDto) {
     return this.orgRepository.update(id, updateRoleDto);
   }

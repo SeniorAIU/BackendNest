@@ -3,6 +3,8 @@ import { UserDto } from './dto/user.dto';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 
+export type Userd = any;
+
 @Injectable()
 export class UserService {
   constructor(
@@ -12,6 +14,18 @@ export class UserService {
   getUsers(): any {
     return this.userRepository.find();
   }
+  private readonly users = [
+    {
+      userId: 1,
+      username: 'john',
+      password: 'changeme',
+    },
+    {
+      userId: 2,
+      username: 'maria',
+      password: 'guess',
+    },
+  ];
 
   async createUsers(data: UserDto): Promise<any> {
     const user = await this.userRepository.save(data);
@@ -20,6 +34,11 @@ export class UserService {
 
   findOne(id: string) {
     return this.userRepository.findOneBy({ id });
+  }
+
+  async findOnes(email: string): Promise<User | undefined> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    return user;
   }
 
   update(id: string, updateRoleDto: UserDto) {

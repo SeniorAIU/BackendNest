@@ -8,6 +8,9 @@ export class UserDto {
   @IsNotEmpty()
   email: string;
 
+  @IsNotEmpty()
+  password: string;
+
   @IsOptional()
   birthDate: Date;
 
