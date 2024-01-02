@@ -33,14 +33,17 @@ export class User {
   @Column()
   job: string;
 
-  @Column({ name: 'phone_number', nullable: true })
-  phone_number: string;
+  @Column({ name: 'phoneNumber', nullable: true })
+  phoneNumber: string;
 
   @Column({ type: 'jsonb', default: '[]' })
   habbies: Array<string>;
 
   @Column()
   type: string;
+
+  @Column({ default: 0, nullable: true })
+  amountDonate: number;
 
   @Column()
   address: string;

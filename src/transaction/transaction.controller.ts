@@ -24,13 +24,13 @@ export class TransactionController {
     return this.transactionService.findOne(id);
   }
 
-  @Get('/transaction/search')
+  @Post('/transaction/search')
   findOneBy(@Body() data: any) {
     return this.transactionService.findOneby(data);
   }
 
   @Post()
-  createcampaign(@Body() data: TransactionDto): any {
+  createTransaction(@Body() data: TransactionDto): any {
     return this.transactionService.createTransaction(data);
   }
 

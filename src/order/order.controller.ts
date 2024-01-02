@@ -25,7 +25,7 @@ export class OrderController {
     return this.orderService.findOne(id);
   }
 
-  @Get('/order/search')
+  @Post('/order/search')
   findOneBy(@Body() data: any) {
     return this.orderService.findOneby(data);
   }

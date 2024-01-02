@@ -24,6 +24,11 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
+  @Post('/user/search')
+  findOneBy(@Body() data: any) {
+    return this.userService.findOneby(data);
+  }
+
   @Post()
   createUsers(@Body() data: UserDto): any {
     console.log(data);

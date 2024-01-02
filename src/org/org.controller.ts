@@ -24,7 +24,7 @@ export class OrgController {
     return this.orgService.findOne(id);
   }
 
-  @Get('/org/search')
+  @Post('/org/search')
   findOneBy(@Body() data: any) {
     return this.orgService.findOneby(data);
   }

@@ -32,6 +32,10 @@ export class UserService {
     return user;
   }
 
+  findOneby(data: any) {
+    return this.userRepository.findBy(data);
+  }
+
   findOne(id: string) {
     return this.userRepository.findOneBy({ id });
   }

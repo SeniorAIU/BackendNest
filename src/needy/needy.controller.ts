@@ -24,7 +24,7 @@ export class NeedyController {
     return this.needyService.findOne(id);
   }
 
-  @Get('/needy/search')
+  @Post('/needy/search')
   findOneBy(@Body() data: any) {
     return this.needyService.findOneby(data);
   }

@@ -2,12 +2,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Transaction } from './entities/transaction.entity';
 import { Repository } from 'typeorm';
 import { TransactionDto, UpdateTransactionDto } from './dto/transaction.dto';
+import { Campaign } from 'src/campaign/entities/compaign.entity';
 
 @Injectable()
 export class TransactionService {
   constructor(
     @Inject('TRANSACTION_REPOSITORY')
-    private transactionRepository: Repository<Transaction>,
+    private transactionRepository: Repository<Transaction>, @Inject('CAMPAIGN_REPOSITORY') private campaginRepository: Repository<Campaign>
   ) {}
 
   async getTransaction() {
@@ -16,8 +17,11 @@ export class TransactionService {
   }
 
   async createTransaction(data: TransactionDto) {
-    const user = await this.transactionRepository.save(data);
-    return user;
+    const campId = data.campId
+    const campaign = await this.campaginRepository.findOneBy({id:campId})
+    // const user = await this.transactionRepository.save(data);
+    // return user;
+    return campaign
   }
 
   async findOne(id: string) {

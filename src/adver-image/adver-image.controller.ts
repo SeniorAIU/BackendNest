@@ -15,7 +15,7 @@ export class AdverImageController {
     return this.adverImageService.findOne(id);
   }
 
-  @Get('/adver-image/search')
+  @Post('/adver-image/search')
   findOneBy(@Body() data: any) {
     return this.adverImageService.findOneby(data);
   }

@@ -29,6 +29,7 @@ export class UserDto {
   habbies: Array<string>;
 
   @IsNotEmpty()
+  @IsIn(['Donate', 'Volunteer'])
   type: string;
 
   @IsOptional()
@@ -38,9 +39,61 @@ export class UserDto {
   country: string;
 
   @IsOptional()
+  amountDonate: number;
+
+  @IsOptional()
   fakeName: string;
 
   @IsNotEmpty()
+  @IsIn(['Approved', 'Rejected', 'Pending'])
+  status: string;
+}
+
+
+export class UpdateUserDto {
+  @IsOptional()
+  name: string;
+
+  @IsOptional()
+  email: string;
+
+  @IsOptional()
+  password: string;
+
+  @IsOptional()
+  birthDate: Date;
+
+  @IsOptional()
+  @IsIn(['MALE', 'FEMALE'])
+  gender: string;
+
+  @IsOptional()
+  job: string;
+
+  @IsOptional()
+  @Expose({ name: 'phoneNumber' })
+  phoneNumber: string;
+
+  @IsOptional()
+  habbies: Array<string>;
+
+  @IsOptional()
+  @IsIn(['Donate', 'Volunteer'])
+  type: string;
+
+  @IsOptional()
+  address: string;
+
+  @IsOptional()
+  country: string;
+
+  @IsOptional()
+  amountDonate: number;
+
+  @IsOptional()
+  fakeName: string;
+
+  @IsOptional()
   @IsIn(['Approved', 'Rejected', 'Pending'])
   status: string;
 }

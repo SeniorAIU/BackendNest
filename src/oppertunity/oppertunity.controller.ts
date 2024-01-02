@@ -24,7 +24,7 @@ export class OppertunityController {
     return this.oppertunityService.findOne(id);
   }
 
-  @Get('/oppertunity/search')
+  @Post('/oppertunity/search')
   findOneBy(@Body() data: any) {
     return this.oppertunityService.findOneby(data);
   }
