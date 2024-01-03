@@ -37,4 +37,12 @@ export class CampaignService {
   delete(id: string) {
     return this.campaingRepository.delete(id);
   }
+
+  async findAllSortedByColumn(data: any) {
+    return this.campaingRepository.find({
+      order: {
+        [data.column]: data.sort,
+      },
+    });
+  }
 }
