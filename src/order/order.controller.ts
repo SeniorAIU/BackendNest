@@ -44,4 +44,9 @@ export class OrderController {
   delete(@Param('id') id: string) {
     return this.orderService.delete(id);
   }
+
+  @Post('/search/order')
+  async findAllSortedByType(@Body() sortByDto: any) {
+    return this.orderService.findAllSortedByColumn(sortByDto);
+  }
 }

@@ -46,4 +46,9 @@ export class OppertunityController {
   delete(@Param('id') id: string) {
     return this.oppertunityService.delete(id);
   }
+
+  @Post('/search/order')
+  async findAllSortedByType(@Body() sortByDto: any) {
+    return this.oppertunityService.findAllSortedByColumn(sortByDto);
+  }
 }

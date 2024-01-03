@@ -35,4 +35,12 @@ export class OrderService {
   delete(id: string) {
     return this.orderRepository.delete(id);
   }
+
+  async findAllSortedByColumn(data: any) {
+    return this.orderRepository.find({
+      order: {
+        [data.column]: data.sort,
+      },
+    });
+  }
 }

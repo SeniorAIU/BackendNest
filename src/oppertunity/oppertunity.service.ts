@@ -37,4 +37,13 @@ export class OppertunityService {
   delete(id: string) {
     return this.oppertunityRepository.delete(id);
   }
+
+  async findAllSortedByColumn(data: any) {
+    return this.oppertunityRepository.find({
+      order: {
+        [data.column]: data.sort,
+      },
+    });
+  }
+
 }

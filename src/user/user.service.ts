@@ -52,4 +52,13 @@ export class UserService {
   delete(id: string) {
     return this.userRepository.delete(id);
   }
+
+  async findAllSortedByColumn(data: any) {
+    return this.userRepository.find({
+      order: {
+        [data.column]: data.sort,
+      },
+    });
+  }
+
 }

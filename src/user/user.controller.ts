@@ -44,4 +44,10 @@ export class UserController {
   delete(@Param('id') id: string) {
     return this.userService.delete(id);
   }
+
+  @Post('/search/order')
+  async findAllSortedByType(@Body() sortByDto: any) {
+    return this.userService.findAllSortedByColumn(sortByDto);
+  }
+
 }
