@@ -3,12 +3,17 @@ import { Transaction } from './entities/transaction.entity';
 import { Repository } from 'typeorm';
 import { TransactionDto, UpdateTransactionDto } from './dto/transaction.dto';
 import { Campaign } from 'src/campaign/entities/compaign.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class TransactionService {
   constructor(
     @Inject('TRANSACTION_REPOSITORY')
-    private transactionRepository: Repository<Transaction>, @Inject('CAMPAIGN_REPOSITORY') private campaginRepository: Repository<Campaign>
+    private transactionRepository: Repository<Transaction>, 
+    @Inject('CAMPAIGN_REPOSITORY') 
+    private campaginRepository: Repository<Campaign>,
+    @Inject('USER_REPOSITORY') 
+    private userRepository: Repository<User>
   ) {}
 
   async getTransaction() {
@@ -18,14 +23,18 @@ export class TransactionService {
 
   async createTransaction(data: TransactionDto) {
     const campId = data.campId
+    const usreId = data.userId
     const campaign = await this.campaginRepository.findOneBy({id:campId})
+    const user = await this.userRepository.findOneBy({id:usreId})
     campaign.amount = campaign.amount + data.amount
     if(campaign.amount > campaign.target){
       return {message: "you can`t donate above campaign target", status:500}
     }
     await this.campaginRepository.save(campaign)
-    const user = await this.transactionRepository.save(data);
-    return user;
+    const result = await this.transactionRepository.save(data);
+    user.amountDonate = user.amountDonate + data.amount;
+    await this.userRepository.save(user)
+    return result;
     // return campaign
   }
 
