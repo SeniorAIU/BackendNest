@@ -49,4 +49,9 @@ export class CampaignController {
     return this.campaignService.findAllSortedByColumn(sortByDto);
   }
 
+  @Get('/total-amount/:id')
+  async getTotalAmount(@Param('id') id: string) {
+    return this.campaignService.getTotalAmount(id);
+  }
+
 }

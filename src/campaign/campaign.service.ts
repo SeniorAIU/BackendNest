@@ -45,4 +45,15 @@ export class CampaignService {
       },
     });
   }
+
+  async getTotalAmount(id: string): Promise<number> {
+    const entitiesWithSameId = await this.campaingRepository.find({
+      where: {
+        orgId: id,
+      },
+    });
+  
+    return entitiesWithSameId.reduce((total, entity) => total + entity.amount, 0);
+  }
+  
 }
