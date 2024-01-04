@@ -32,4 +32,8 @@ export class OrderDto {
   @IsOptional()
   imageUrl: string;
 
+  @IsOptional()
+  @IsNumber()
+  rating: number;
+
 }

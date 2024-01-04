@@ -8,4 +8,6 @@ export class UpdateOrderDto {
   status: string;
 
   imageUrl: string;
+
+  rating: number;
 }

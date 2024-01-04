@@ -42,4 +42,7 @@ export class Order {
 
   @Column({ nullable: true })
   imageUrl: string;
+
+  @Column({ type: 'float', nullable: true })
+  rating: number;
 }
