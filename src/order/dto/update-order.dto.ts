@@ -6,4 +6,6 @@ export class UpdateOrderDto {
   amount: number;
 
   status: string;
+
+  imageUrl: string;
 }

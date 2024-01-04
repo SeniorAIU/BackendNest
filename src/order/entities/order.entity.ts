@@ -39,4 +39,7 @@ export class Order {
   @ManyToOne(() => ORG)
   @JoinColumn({ name: 'org_id' })
   org: ORG;
+
+  @Column({ nullable: true })
+  imageUrl: string;
 }

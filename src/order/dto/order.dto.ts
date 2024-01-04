@@ -5,6 +5,7 @@ import {
   IsString,
   IsEnum,
   IsUUID,
+  IsOptional,
 } from 'class-validator';
 
 export class OrderDto {
@@ -27,4 +28,8 @@ export class OrderDto {
   @IsString()
   @IsUUID()
   orgId: string;
+
+  @IsOptional()
+  imageUrl: string;
+
 }
