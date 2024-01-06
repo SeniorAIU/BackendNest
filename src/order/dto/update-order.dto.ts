@@ -10,4 +10,6 @@ export class UpdateOrderDto {
   imageUrl: string;
 
   rating: number;
+
+  price: number;
 }

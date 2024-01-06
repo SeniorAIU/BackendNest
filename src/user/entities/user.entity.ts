@@ -1,4 +1,6 @@
+import { Cart } from 'src/cart/entities/cart.entity';
 import { Comments } from 'src/comment/entities/comment.entity';
+import { Order } from 'src/order/entities/order.entity';
 import { Transaction } from 'src/transaction/entities/transaction.entity';
 import {
   Column,
@@ -63,6 +65,10 @@ export class User {
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   @JoinColumn({ name: 'user_id' })
   transaction: Transaction[];
+
+  @OneToMany(() => Cart, (cart) => cart.user)
+  @JoinColumn({ name: 'cart_id'})
+  cart: Cart[];
 
   @OneToMany(() => Comments, (user) => user.user)
   @JoinColumn({ name: 'user_id' })

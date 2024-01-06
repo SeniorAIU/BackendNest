@@ -1,4 +1,5 @@
 import { Campaign } from 'src/campaign/entities/compaign.entity';
+import { Order } from 'src/order/entities/order.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
   Column,
@@ -39,4 +40,11 @@ export class Transaction {
   @ManyToOne(() => Campaign)
   @JoinColumn({ name: 'camp_id' })
   camp: Campaign;
+
+  @Column({ name: 'order_id' })
+  orderId: string;
+
+  @ManyToOne(() => Order)
+  @JoinColumn({ name: 'order_id' })
+  order: Order;
 }

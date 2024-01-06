@@ -1,11 +1,14 @@
+import { Cart } from 'src/cart/entities/cart.entity';
 import { StatusEnum } from 'src/enum/status-enum';
 import { ORG } from 'src/org/entities/org.entity';
+import { Transaction } from 'src/transaction/entities/transaction.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,6 +26,9 @@ export class Order {
 
   @Column()
   amount: number;
+
+  @Column({ default: 0})
+  price: number;
 
   @Column({ type: 'enum', enum: StatusEnum })
   status: string;
@@ -45,4 +51,12 @@ export class Order {
 
   @Column({ type: 'float', nullable: true })
   rating: number;
+
+  @ManyToOne(() => Cart, cart => cart.order)
+  @JoinColumn({ name: 'cart_id' })
+  cart: Cart;
+
+  @ManyToOne(() => Transaction, transaction => transaction.order)
+  @JoinColumn({ name: 'order_id' })
+  order: Transaction;
 }

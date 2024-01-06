@@ -38,8 +38,11 @@ export class CampaignService {
     return this.campaingRepository.delete(id);
   }
 
-  async findAllSortedByColumn(data: any) {
+  async findAllSortedByIdAndColumn(data: any, id: string) {
     return this.campaingRepository.find({
+      where: {
+        orgId: id,
+      },
       order: {
         [data.column]: data.sort,
       },

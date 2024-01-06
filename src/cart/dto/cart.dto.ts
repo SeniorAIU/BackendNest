@@ -1,32 +1,24 @@
 import { IsNotEmpty, IsOptional, IsIn } from 'class-validator';
+import { Order } from 'src/order/entities/order.entity';
 
-export class TransactionDto {
+export class CartDto {
   @IsNotEmpty()
   amount: number;
 
-  @IsNotEmpty()
-  date: Date;
-
-  @IsNotEmpty()
+  @IsOptional()
   @IsIn(['Approved', 'Rejected', 'Pending'])
   status: string;
 
   @IsNotEmpty()
   userId: string;
 
-  @IsOptional()
-  campId: string;
-
-  @IsOptional()
+  @IsNotEmpty()
   orderId: string;
 }
 
-export class UpdateTransactionDto {
+export class UpdateUserDto {
   @IsOptional()
   amount: number;
-
-  @IsOptional()
-  date: string;
 
   @IsOptional()
   status: string;

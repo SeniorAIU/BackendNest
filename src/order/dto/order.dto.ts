@@ -36,4 +36,8 @@ export class OrderDto {
   @IsNumber()
   rating: number;
 
+  @IsOptional()
+  @IsNumber()
+  price: number;
+
 }

@@ -44,9 +44,9 @@ export class CampaignController {
     return this.campaignService.delete(id);
   }
 
-  @Post('/search/order')
-  async findAllSortedByType(@Body() sortByDto: any) {
-    return this.campaignService.findAllSortedByColumn(sortByDto);
+  @Post('/search/order/:id')
+  async findAllSortedByType(@Body() sortByDto: any,@Param('id') id: string) {
+    return this.campaignService.findAllSortedByIdAndColumn(sortByDto, id);
   }
 
   @Get('/total-amount/:id')

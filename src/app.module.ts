@@ -14,6 +14,7 @@ import { OppertunityModule } from './oppertunity/oppertunity.module';
 import { CommentsModule } from './comment/comment.module';
 import { AdverImageModule } from './adver-image/adver-image.module';
 import { AuthModule } from './auth/auth.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { AuthModule } from './auth/auth.module';
     CommentsModule,
     AdverImageModule,
     AuthModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
