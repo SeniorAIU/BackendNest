@@ -20,6 +20,9 @@ export class OppertunityDto {
   volunteers: number;
 
   @IsOptional()
+  volunteers_target: number;
+
+  @IsOptional()
   start_date: string;
 
   @IsOptional()
@@ -68,5 +71,8 @@ export class UpdateOppertunityDto {
   note: string;
   @IsOptional()
   volunteers: number;
+
+  @IsOptional()
+  volunteers_target: number;
 
 }

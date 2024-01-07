@@ -31,6 +31,9 @@ export class Oppertunity {
   @Column({ default: 0 })
   volunteers: number;
 
+  @Column({ default: 0 })
+  volunteers_target: number;
+
   @Column()
   end_date: string;
 
