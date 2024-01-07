@@ -42,7 +42,7 @@ export class OppertunityDto {
   note: string;
 
   @IsOptional()
-  number_user: string;
+  image: string;
 
   @IsOptional()
   orgId: string;
@@ -70,8 +70,9 @@ export class UpdateOppertunityDto {
   @IsOptional()
   note: string;
   @IsOptional()
+  image:string;
+  @IsOptional()
   volunteers: number;
-
   @IsOptional()
   volunteers_target: number;
 

@@ -15,6 +15,7 @@ import { CommentsModule } from './comment/comment.module';
 import { AdverImageModule } from './adver-image/adver-image.module';
 import { AuthModule } from './auth/auth.module';
 import { CartModule } from './cart/cart.module';
+import { VolunteerModule } from './volunteer/volunteer.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { CartModule } from './cart/cart.module';
     AdverImageModule,
     AuthModule,
     CartModule,
+    VolunteerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -96,4 +96,7 @@ export class UpdateUserDto {
   @IsOptional()
   @IsIn(['Approved', 'Rejected', 'Pending'])
   status: string;
+
+  @IsOptional()
+  volunteers: number
 }

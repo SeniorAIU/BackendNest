@@ -1,7 +1,9 @@
 import { Cart } from 'src/cart/entities/cart.entity';
 import { Comments } from 'src/comment/entities/comment.entity';
+import { Oppertunity } from 'src/oppertunity/entities/oppertunity.entity';
 import { Order } from 'src/order/entities/order.entity';
 import { Transaction } from 'src/transaction/entities/transaction.entity';
+import { Volunteer } from 'src/volunteer/entities/volunteer.entity';
 import {
   Column,
   CreateDateColumn,
@@ -56,6 +58,9 @@ export class User {
   @Column()
   status: string;
 
+  @Column({default:0})
+  volunteers: number
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
@@ -65,6 +70,10 @@ export class User {
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   @JoinColumn({ name: 'user_id' })
   transaction: Transaction[];
+
+  @OneToMany(() => Volunteer, (volunteer) => volunteer.user)
+  @JoinColumn({ name: 'user_id' })
+  volunteer: Volunteer[];
 
   @OneToMany(() => Cart, (cart) => cart.user)
   @JoinColumn({ name: 'cart_id'})

@@ -4,9 +4,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ORG } from 'src/org/entities/org.entity';
+import { Volunteer } from 'src/volunteer/entities/volunteer.entity';
 
 @Entity('oppertunity')
 export class Oppertunity {
@@ -50,7 +52,7 @@ export class Oppertunity {
   license: string;
 
   @Column()
-  number_user: string;
+  image: string;
 
   @Column({ name: 'org_id' })
   orgId: string;
@@ -58,4 +60,8 @@ export class Oppertunity {
   @ManyToOne(() => ORG)
   @JoinColumn({ name: 'org_id' }) // This is the foreign key in the Campaign table
   org: ORG;
+
+  @OneToMany(() => Volunteer, (volunteer) => volunteer.oppertunity)
+  @JoinColumn({ name: 'oppertunity_id' })
+  volunteer: Volunteer[];
 }
