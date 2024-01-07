@@ -17,6 +17,9 @@ export class OppertunityDto {
   requirment: Array<string>;
 
   @IsOptional()
+  volunteers: number;
+
+  @IsOptional()
   start_date: string;
 
   @IsOptional()
@@ -63,4 +66,7 @@ export class UpdateOppertunityDto {
   license: string;
   @IsOptional()
   note: string;
+  @IsOptional()
+  volunteers: number;
+
 }
