@@ -26,12 +26,6 @@ export class VolunteerService {
         const usreId = data.userId
         const oppertunity = await this.oppertunityRepository.findOneBy({id:oppertunityId})
         const user = await this.userRepository.findOneBy({id:usreId})
-        console.log(oppertunity.volunteers)
-        console.log(oppertunity.volunteers_target)
-        console.log(oppertunity            )
-        console.log(data)
-        console.log(user)
-
         if(oppertunity.volunteers >= oppertunity.volunteers_target){
             return {message: "you can`t volunteer above oppertunity target", status:500}
         }

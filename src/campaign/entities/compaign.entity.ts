@@ -83,7 +83,7 @@ export class Campaign {
   @JoinColumn({ name: 'org_id' }) // This is the foreign key in the Campaign table
   org: ORG;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.camp)
-  @JoinColumn({ name: 'camp_id' })
-  transaction: Transaction[];
+  // @OneToMany(() => Transaction, (transaction) => transaction.camp)
+  // @JoinColumn({ name: 'camp_id' })
+  // transaction: Transaction[];
 }

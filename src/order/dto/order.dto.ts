@@ -40,4 +40,7 @@ export class OrderDto {
   @IsNumber()
   price: number;
 
+  @IsOptional()
+  @IsNumber()
+  Buys: number;
 }

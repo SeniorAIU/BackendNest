@@ -36,4 +36,9 @@ export class CartController {
     delete(@Param('id') id: string) {
       return this.cartService.delete(id);
     }
+
+    @Post('/order/Buys/:id')
+    Buys(@Param('id') id: string) {
+      return this.cartService.Buys(id);
+    }
 }

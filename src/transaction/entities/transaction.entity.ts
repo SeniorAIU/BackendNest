@@ -34,17 +34,9 @@ export class Transaction {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column({ name: 'camp_id' })
+  @Column({ name: 'camp_id',nullable:true  })
   campId: string;
 
-  @ManyToOne(() => Campaign)
-  @JoinColumn({ name: 'camp_id' })
-  camp: Campaign;
-
-  @Column({ name: 'order_id' })
+  @Column({ name: 'order_id', nullable:true })
   orderId: string;
-
-  @ManyToOne(() => Order)
-  @JoinColumn({ name: 'order_id' })
-  order: Order;
 }

@@ -39,4 +39,36 @@ export class CartService {
       delete(id: string) {
         return this.CartRepository.delete(id);
       }
+
+      async Buys(id: string) {
+        const cart = await this.CartRepository.findBy({ userId: id });
+    
+        // Create a dictionary to store the aggregated results based on orderId
+        const aggregatedCart: { [key: string]: { amount: number, status: string } } = {};
+    
+        // Iterate through the original array and update the dictionary
+        for (const item of cart) {
+            const orderId = item.id;
+    
+            if (aggregatedCart[orderId]) {
+                // If the orderId already exists in the dictionary, update the amount
+                aggregatedCart[orderId].amount += item.amount;
+            } else {
+                // If the orderId doesn't exist, add a new entry
+                aggregatedCart[orderId] = {
+                    amount: item.amount,
+                    status: item.status,
+                };
+            }
+        }
+    
+        // Convert the dictionary values back to an array
+        const aggregatedCartArray = Object.keys(aggregatedCart).map(orderId => ({
+            orderId: orderId,
+            amount: aggregatedCart[orderId].amount,
+            status: aggregatedCart[orderId].status,
+        }));
+    
+        return aggregatedCartArray;
+    }
 }

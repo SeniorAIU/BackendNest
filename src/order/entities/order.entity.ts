@@ -27,6 +27,9 @@ export class Order {
   @Column()
   amount: number;
 
+  @Column({default:0})
+  Buys: number;
+
   @Column({ default: 0})
   price: number;
 
@@ -56,7 +59,4 @@ export class Order {
   @JoinColumn({ name: 'cart_id' })
   cart: Cart;
 
-  @ManyToOne(() => Transaction, transaction => transaction.order)
-  @JoinColumn({ name: 'order_id' })
-  order: Transaction;
 }

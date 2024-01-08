@@ -11,5 +11,7 @@ export class UpdateOrderDto {
 
   rating: number;
 
+  Buys: number;
+
   price: number;
 }
