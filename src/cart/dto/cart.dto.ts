@@ -1,24 +1,24 @@
-import { IsNotEmpty, IsOptional, IsIn } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsIn, IsArray } from 'class-validator';
+import { UUID } from 'crypto';
 import { Order } from 'src/order/entities/order.entity';
 
 export class CartDto {
-  @IsNotEmpty()
+  @IsOptional()
   amount: number;
 
   @IsOptional()
   @IsIn(['Approved', 'Rejected', 'Pending'])
   status: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   userId: string;
 
-  @IsNotEmpty()
-  orderId: string;
+  @IsOptional()
+  @IsArray()
+  orders: any;
 }
 
-export class UpdateUserDto {
-  @IsOptional()
-  amount: number;
+export class UpdateCartDto {
 
   @IsOptional()
   status: string;

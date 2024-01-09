@@ -18,7 +18,10 @@ export class TransactionDto {
   campId: string;
 
   @IsOptional()
-  orderId: string;
+  cartId: string;
+
+  @IsOptional()
+  paymentId:string
 }
 
 export class UpdateTransactionDto {

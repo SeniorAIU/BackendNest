@@ -16,6 +16,11 @@ export class CartController {
     findOne(@Param('id') id: string) {
       return this.cartService.findOne(id);
     }
+
+    @Get(':id/getAll')
+    findAll(@Param('id') id: string) {
+      return this.cartService.findAll(id);
+    }
   
     @Post('/cart/search')
     findOneBy(@Body() data: any) {
@@ -26,6 +31,11 @@ export class CartController {
     createCart(@Body() data: CartDto): any {
       return this.cartService.createCart(data);
     }
+
+    @Post('/fatora')
+    Fatora(@Body() data: any): any {
+      return this.cartService.Fatore(data);
+    }
   
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateRoleDto: UpdateTransactionDto) {
@@ -35,6 +45,11 @@ export class CartController {
     @Delete(':id')
     delete(@Param('id') id: string) {
       return this.cartService.delete(id);
+    }
+
+    @Delete('/order/:id')
+    deleteItemFromCart(@Param('id') id: string) {
+      return this.cartService.deleteItemFromCart(id);
     }
 
     @Post('/order/Buys/:id')

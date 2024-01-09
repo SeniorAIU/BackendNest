@@ -1,4 +1,5 @@
-    import { Order } from 'src/order/entities/order.entity';
+    import { UUID } from 'crypto';
+import { Order } from 'src/order/entities/order.entity';
     import { User } from 'src/user/entities/user.entity';
     import {
     Column,
@@ -18,7 +19,7 @@
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column({default:0})
     amount: number;
 
     @Column({ default:"Pending"})
@@ -37,10 +38,6 @@
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-    @Column({ name: 'order_id' })
-    orderId: String;
-
-    @ManyToOne(() => Order)
-    @JoinColumn({ name: 'order_id' })
-    order: Order;
+    @Column({ type: 'jsonb', name: 'orders', nullable: true })
+    orders: Array<any>;
     }

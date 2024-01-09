@@ -88,6 +88,10 @@ export class CreateCampaignDto {
   @IsString()
   @IsUUID()
   orgId: string;
+
+  @IsOptional()
+  donation: number;
+
 }
 
 export class UpdateCampaignDto {
@@ -159,4 +163,8 @@ export class UpdateCampaignDto {
 
   @IsOptional()
   org_id: string;
+
+  @IsOptional()
+  donation: number;
+
 }

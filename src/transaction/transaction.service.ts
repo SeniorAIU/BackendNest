@@ -24,7 +24,7 @@ export class TransactionService {
   async createTransaction(data: TransactionDto) {
     const campId = data.campId
     const usreId = data.userId
-    const orderId = data.orderId
+    const cartId = data.cartId
     const user = await this.userRepository.findOneBy({id:usreId})
     if(campId){
       const campaign = await this.campaginRepository.findOneBy({id:campId})
@@ -41,7 +41,7 @@ export class TransactionService {
       await this.userRepository.save(user)
       return result;
     }
-    if(orderId){
+    if(cartId){
       const transaction = await this.transactionRepository.save(data);
       return {data:transaction , status:200}
  

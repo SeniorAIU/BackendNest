@@ -43,6 +43,9 @@ export class Campaign {
   @Column()
   type: string;
 
+  @Column({default:0})
+  donation: number;
+
   @Column({ name: 'start_time' })
   startTime: Date;
 

@@ -37,6 +37,9 @@ export class Transaction {
   @Column({ name: 'camp_id',nullable:true  })
   campId: string;
 
-  @Column({ name: 'order_id', nullable:true })
-  orderId: string;
+  @Column({ name: 'cart_id', nullable:true })
+  cartId: string;
+
+  @Column({ name: "payment_id", nullable:true})
+  paymentId:string
 }

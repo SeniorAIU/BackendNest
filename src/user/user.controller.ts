@@ -50,4 +50,8 @@ export class UserController {
     return this.userService.findAllSortedByColumn(sortByDto);
   }
 
+  @Post(':id/campaign/:campid/Donation')
+  donation(@Param('id') id: string, @Param('campid') campid: string,@Body() data:any) {
+    return this.userService.donation(id,campid, data);
+  }
 }

@@ -55,8 +55,4 @@ export class Order {
   @Column({ type: 'float', nullable: true })
   rating: number;
 
-  @ManyToOne(() => Cart, cart => cart.order)
-  @JoinColumn({ name: 'cart_id' })
-  cart: Cart;
-
 }
