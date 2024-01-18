@@ -73,7 +73,7 @@ export class Campaign {
   @Column({ name: 'license_number' })
   licenseNumber: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })

@@ -29,33 +29,39 @@ export class CartService {
     return result;
   }
 
-  async createCart(data: CartDto): Promise<any> {
-    const cart = await this.CartRepository.findOneBy({ userId: data.userId });
-    
-    if(cart.status == "Approved"){
-      const cartData = await this.CartRepository.save(data);
-      return { data: cartData, message: "New Cart", status: 200 };
-    }
+  async createCart(data: CartDto,userId: string): Promise<any> {
+    const cart = await this.CartRepository.findOneBy({ userId: userId, status: "Pending" });
+    console.log(cart)
     if (!cart) {
-      const cartData = await this.CartRepository.save(data);
+      const order = await this.orderReopsitory.findOneBy({ id: data.orders[0].id })
+
+      const CartData={
+        userId,
+        orders:data.orders,
+        amount: data.orders[0].amount,
+        totalPrice: order.price * data.orders[0].amount
+      }
+      const cartData = await this.CartRepository.save(CartData);
       return { data: cartData, message: "New Cart", status: 200 };
     }  
     const orderData = {
       id: data.orders[0].id,
       amount: data.orders[0].amount,
     };
+    const order = await this.orderReopsitory.findOneBy({ id: data.orders[0].id })
     for (let i = 0; i < cart.orders.length; i++) {
       if(cart.orders[i].id == data.orders[0].id){
+        cart.totalPrice = cart.totalPrice + (order.price * data.orders[0].amount)
         cart.orders[i].amount = cart.orders[i].amount + data.orders[0].amount
         cart.amount = cart.amount + data.orders[0].amount
         await this.CartRepository.save(cart);
         return {message: "Order is exist and i will add quantity", data:cart}
       }
     }
-    cart.amount = cart.amount + data.orders.amount
+    cart.totalPrice = cart.totalPrice + (order.price * data.orders[0].amount)
+    cart.amount = cart.amount + data.orders[0].amount
     cart.orders.push(orderData);
     const updatedCart = await this.CartRepository.save(cart);
-  
     return { data: updatedCart, message: "Cart updated with new order", status: 200 };
   }
 
@@ -77,6 +83,25 @@ export class CartService {
     return this.CartRepository.update(id, updateCartDto);
   }
 
+  async addOrderToCart(id: string, orderData : any) {
+    const cart = await this.CartRepository.findOneBy({ id });
+    console.log(cart)
+    const data =  {
+      "id": orderData.id,
+      "amount":orderData.amount 
+    }
+    const order = await this.orderReopsitory.findOneBy({ id: orderData.id })
+    if ((orderData.amount + order.Buys) > order.amount) {
+      return { message: `ERROR: Big Quantity in this order ${order.amount - order.Buys }` }
+    }
+    order.Buys = order.Buys + orderData.amount
+    cart.orders.push(data)
+    await this.CartRepository.save(cart)
+    await this.orderReopsitory.save(order)
+
+    // return this.CartRepository.update(id, orderAmoujnt);
+  }
+  
   delete(id: string) {
     return this.CartRepository.delete(id);
   }
@@ -159,5 +184,4 @@ export class CartService {
 
     return response;
   }
-  // }
 }

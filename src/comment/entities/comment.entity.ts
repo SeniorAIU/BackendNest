@@ -14,10 +14,7 @@ export class Comments {
   id: string;
 
   @Column()
-  content: string;
-
-  @Column()
-  rate: string;
+  description: string;
 
   @Column({ name: 'user_id' })
   userId: string;
@@ -25,11 +22,4 @@ export class Comments {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
-
-  @Column({ name: 'cam_id' })
-  camId: string;
-
-  @ManyToOne(() => Campaign)
-  @JoinColumn({ name: 'cam_id' })
-  cam: Campaign;
 }

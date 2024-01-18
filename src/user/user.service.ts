@@ -61,11 +61,11 @@ export class UserService {
   async donation(id: string, campid: string, data:any){
     const user =  await this.userRepository.findOneBy({id})
     const campaign = await this.campaingRepository.findOneBy({id:campid})
-    if((campaign.target - campaign.donation) == 0 ){
-      campaign.status = "approved"
-      await this.campaingRepository.save(campaign)
-      return{message:"You on Target amount ", status:500}
-    }
+    // if((campaign.target - campaign.donation) == 0 ){
+    //   campaign.status = "approved"
+    //   await this.campaingRepository.save(campaign)
+    //   return{message:"You on Target amount ", status:500}
+    // }
     if(!user || !campaign){
       return{message:"Error Data", status:500}
     }
@@ -84,10 +84,10 @@ export class UserService {
     }
     const result = await this.Fatore(dataFatora)
     if(result.ErrorMessage == "Success"){
-      user.amountDonate = user.amountDonate + data.amount
-      await this.userRepository.save(user)
-      campaign.donation = campaign.donation + data.amount
-      await this.campaingRepository.save(campaign)
+      // user.amountDonate = user.amountDonate + data.amount
+      // await this.userRepository.save(user)
+      // campaign.donation = campaign.donation + data.amount
+      // await this.campaingRepository.save(campaign)
       const transactionData = {
         "amount": data.amount,
         "date": "2023-10-01 00:00:00",
@@ -96,10 +96,9 @@ export class UserService {
         "status":"Pending",
         "campId":campid
       }
-      console.log(transactionData)
       await this.transactionRepository.save(transactionData)
       if((campaign.target - campaign.donation) == 0 ){
-        campaign.status = "approved"
+        campaign.status = "Approved"
         await this.campaingRepository.save(campaign)
       }
 

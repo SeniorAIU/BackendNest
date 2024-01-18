@@ -11,11 +11,17 @@ export class CartController {
     getcampaign() {
       return this.cartService.getCart();
     }
+
+    // @Get('SearchOrderBuys/order/:id')
+    // SearchOrderBuys(@Param('id') id: string) {
+    //   return this.cartService.SearchOrderBuys(id);
+    // }
   
     @Get(':id')
     findOne(@Param('id') id: string) {
       return this.cartService.findOne(id);
     }
+
 
     @Get(':id/getAll')
     findAll(@Param('id') id: string) {
@@ -27,9 +33,9 @@ export class CartController {
       return this.cartService.findOneby(data);
     }
   
-    @Post()
-    createCart(@Body() data: CartDto): any {
-      return this.cartService.createCart(data);
+    @Post('user/:userId')
+    createCart(@Body() data: CartDto,@Param('userId') userId: string,): any {
+      return this.cartService.createCart(data,userId);
     }
 
     @Post('/fatora')
@@ -40,6 +46,11 @@ export class CartController {
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateRoleDto: UpdateTransactionDto) {
       return this.cartService.update(id, updateRoleDto);
+    }
+
+    @Patch(':id/order/')
+    addOrderToCart(@Param('id') id: string, @Body() addOrder: any) {
+      return this.cartService.addOrderToCart(id, addOrder);
     }
   
     @Delete(':id')

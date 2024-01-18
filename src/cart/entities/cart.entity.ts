@@ -22,6 +22,9 @@ import { Order } from 'src/order/entities/order.entity';
     @Column({default:0})
     amount: number;
 
+    @Column({default:0})
+    totalPrice: number;
+
     @Column({ default:"Pending"})
     status: string;
 

@@ -1,5 +1,6 @@
 export enum StatusEnum {
   ACTIVE = 'Active',
-  APPROVED = 'approved',
+  APPROVED = 'Approved',
+  PRNDING = 'Pending',
   CANCELED = 'Canceled',
 }

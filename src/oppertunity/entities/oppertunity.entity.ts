@@ -42,7 +42,7 @@ export class Oppertunity {
   @Column()
   type: string;
 
-  @Column({ type: 'enum', enum: StatusEnum })
+  @Column({ type: 'enum', enum: StatusEnum, default:"Pending" })
   status: string;
 
   @Column()

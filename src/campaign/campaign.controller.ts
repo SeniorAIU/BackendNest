@@ -54,4 +54,13 @@ export class CampaignController {
     return this.campaignService.getTotalAmount(id);
   }
 
+  @Get(':id/:year/amounts')
+  async getAmountsByYear(@Param('year') year: number, @Param('id') id: string) {
+    return this.campaignService.getAmountsByYear(year, id);
+  }
+  @Get(':id/:year/:month/amounts')
+  async getAmountsByMonth(@Param('year') year: number,@Param('month') month: number, @Param('id') id: string) {
+    return this.campaignService.getAmountsByMonth(year, month, id);
+  }
+
 }

@@ -83,7 +83,7 @@ export class User {
   @JoinColumn({ name: 'user_id' })
   user: Comments[];
 
-  @OneToMany(() => Comments, (campaign) => campaign.cam)
+  @OneToMany(() => Comments, (campaign) => campaign.user)
   @JoinColumn({ name: 'user_id' })
   cam: Comments[];
 }
