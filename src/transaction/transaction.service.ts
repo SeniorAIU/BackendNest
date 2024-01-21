@@ -7,35 +7,63 @@ import { Campaign } from 'src/campaign/entities/compaign.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { map } from 'rxjs/operators';
+import { Order } from 'src/order/entities/order.entity';
+import { Cart } from 'src/cart/entities/cart.entity';
 
 @Injectable()
 export class TransactionService {
   constructor(
     private httpService: HttpService,
+    @Inject('ORDER_REPOSITORY')
+    private orderReopsitory: Repository<Order>,
+    @Inject('CART_REPOSITORY')
+    private cartRepository: Repository<Cart>,
     @Inject('TRANSACTION_REPOSITORY')
-    private transactionRepository: Repository<Transaction>, 
-    @Inject('CAMPAIGN_REPOSITORY') 
+    private transactionRepository: Repository<Transaction>,
+    @Inject('CAMPAIGN_REPOSITORY')
     private campaginRepository: Repository<Campaign>,
-    @Inject('USER_REPOSITORY') 
+    @Inject('USER_REPOSITORY')
     private userRepository: Repository<User>
-  ) {}
+  ) { }
 
   @Cron(CronExpression.EVERY_30_SECONDS)
   async updadteCampaignStatuses() {
     const transaction = await this.transactionRepository.find();
     for (let i = 0; i < transaction.length; i++) {
       const result = await this.Fatore(transaction[i].paymentId)
-      if(result.Data.status == "A" && transaction[i].status != "Approved"){ 
-        transaction[i].status = "Approved"
-        const campId = transaction[i].campId
-        const userId = transaction[i].userId
-        const campaign = await this.campaginRepository.findOneBy({id:campId})
-        const user = await this.userRepository.findOneBy({id:userId})
-        campaign.donation = campaign.donation + transaction[i].amount
-        user.amountDonate = user.amountDonate + transaction[i].amount;
-        await this.campaginRepository.save(campaign)
-        await this.userRepository.save(user)
-        await this.transactionRepository.save(transaction[i])
+      if (result.Data.status == "A" && transaction[i].status == "Pending") {
+        console.log(1)
+        if (transaction[i].campId) {
+          transaction[i].status = "Approved"
+          const campId = transaction[i].campId
+          const userId = transaction[i].userId
+          const campaign = await this.campaginRepository.findOneBy({ id: campId })
+          const user = await this.userRepository.findOneBy({ id: userId })
+          campaign.donation = campaign.donation + transaction[i].amount
+          user.amountDonate = user.amountDonate + transaction[i].amount;
+          await this.campaginRepository.save(campaign)
+          await this.userRepository.save(user)
+          await this.transactionRepository.save(transaction[i])
+        }
+        if(transaction[i].cartId){
+          transaction[i].status = "Approved"
+          const cartId = transaction[i].cartId
+          const userId = transaction[i].userId
+          await this.transactionRepository.save(transaction[i])
+          const cart = await this.cartRepository.findOneBy({id:cartId})
+          for (let i = 0; i < cart.orders.length; i++) {
+            const order = await this.orderReopsitory.findOneBy({ id: cart.orders[i].id })
+            order.Buys = order.Buys + cart.orders[i].amount
+            await this.orderReopsitory.save(order)
+            const user = await this.userRepository.findOneBy({id:userId})
+            user.amountDonate = user.amountDonate + transaction[i].amount
+            await this.userRepository.save(user)
+
+
+          }
+          cart.status = "Approved"
+          await this.cartRepository.save(cart)
+        }
       }
     }
   }
@@ -49,22 +77,22 @@ export class TransactionService {
     const campId = data.campId
     const usreId = data.userId
     const cartId = data.cartId
-    const user = await this.userRepository.findOneBy({id:usreId})
-    if(campId){
-      const campaign = await this.campaginRepository.findOneBy({id:campId})
-      if(!campaign){
-        return {message: "campaign id not exist", status:500}
+    const user = await this.userRepository.findOneBy({ id: usreId })
+    if (campId) {
+      const campaign = await this.campaginRepository.findOneBy({ id: campId })
+      if (!campaign) {
+        return { message: "campaign id not exist", status: 500 }
       }
-      if((campaign.amount + data.amount) > campaign.target){
-        return {message: "you can`t donate above campaign target", status:500}
+      if ((campaign.amount + data.amount) > campaign.target) {
+        return { message: "you can`t donate above campaign target", status: 500 }
       }
       const result = await this.transactionRepository.save(data);
       return result;
     }
-    if(cartId){
+    if (cartId) {
       const transaction = await this.transactionRepository.save(data);
-      return {data:transaction , status:200}
- 
+      return { data: transaction, status: 200 }
+
     }
     // return campaign
   }

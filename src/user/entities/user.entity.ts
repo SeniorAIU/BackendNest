@@ -49,8 +49,11 @@ export class User {
   @Column({ default: 0, nullable: true })
   amountDonate: number;
 
-  @Column()
+  @Column({default:"MALE"})
   address: string;
+
+  @Column()
+  gender: string;
 
   @Column()
   country: string;

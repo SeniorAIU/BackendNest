@@ -28,7 +28,7 @@ export class Oppertunity {
   requirment: Array<string>;
 
   @Column()
-  start_date: string;
+  start_date: Date;
 
   @Column({ default: 0 })
   volunteers: number;
@@ -37,7 +37,7 @@ export class Oppertunity {
   volunteers_target: number;
 
   @Column()
-  end_date: string;
+  end_date: Date;
 
   @Column()
   type: string;

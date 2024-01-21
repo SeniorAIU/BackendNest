@@ -6,13 +6,21 @@ import {
   Param,
   Patch,
   Post,
+  Req,
+  Res,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { OppertunityService } from './oppertunity.service';
 import { OppertunityDto, UpdateOppertunityDto } from './dto/oppertunity.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
+import { diskStorage } from 'multer';
+
 
 @Controller('oppertunity')
 export class OppertunityController {
-  constructor(private readonly oppertunityService: OppertunityService) {}
+  constructor(private readonly oppertunityService: OppertunityService) { }
 
   @Get()
   getcampaign() {

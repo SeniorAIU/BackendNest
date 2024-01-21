@@ -1,4 +1,5 @@
 import { Campaign } from 'src/campaign/entities/compaign.entity';
+import { StatusEnum } from 'src/enum/status-enum';
 import { Oppertunity } from 'src/oppertunity/entities/oppertunity.entity';
 import { Order } from 'src/order/entities/order.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -22,6 +23,9 @@ export class Volunteer {
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
+
+  @Column({ type: 'enum', enum: StatusEnum, default:"Pending" })
+  status: string;
 
   @Column({ name: 'user_id' })
   userId: string;

@@ -16,6 +16,7 @@ import { AdverImageModule } from './adver-image/adver-image.module';
 import { AuthModule } from './auth/auth.module';
 import { CartModule } from './cart/cart.module';
 import { VolunteerModule } from './volunteer/volunteer.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -24,6 +25,9 @@ import { VolunteerModule } from './volunteer/volunteer.module';
       load: [configuration],
     }),
     TypeOrmModule.forRoot(TypeOrmConfig),
+    MulterModule.register({
+      dest: './uploads', // specify the upload directory
+  }),
     UserModule,
     CampaignModule,
     OrderModule,

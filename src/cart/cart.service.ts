@@ -132,12 +132,12 @@ export class CartService {
     console.log(result)
     if (result.ErrorMessage == "Success") {
       for (let i = 0; i < cart.orders.length; i++) {
-        const order = await this.orderReopsitory.findOneBy({ id: cart.orders[i].id })
-        order.Buys = order.Buys + cart.orders[i].amount
-        await this.orderReopsitory.save(order)
-        const user = await this.userReopsitory.findOneBy({id})
-        user.amountDonate = user.amountDonate + totalAmount
-        await this.userReopsitory.save(user)
+        // const order = await this.orderReopsitory.findOneBy({ id: cart.orders[i].id })
+        // order.Buys = order.Buys + cart.orders[i].amount
+        // await this.orderReopsitory.save(order)
+        // const user = await this.userReopsitory.findOneBy({id})
+        // user.amountDonate = user.amountDonate + totalAmount
+        // await this.userReopsitory.save(user)
         const cartId = cart.id
         const transactionData = {
           "amount": totalAmount,
@@ -149,7 +149,7 @@ export class CartService {
         }
         console.log(transactionData)
         await this.transactionRepository.save(transactionData)
-        await this.update(cartId,{status: "Approved"})
+        // await this.update(cartId,{status: "Approved"})
       }
     }
     else {

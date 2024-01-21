@@ -26,21 +26,25 @@ export class VolunteerService {
         const usreId = data.userId
         const oppertunity = await this.oppertunityRepository.findOneBy({id:oppertunityId})
         const user = await this.userRepository.findOneBy({id:usreId})
+        const volunteer = await this.volunteerRepository.findOneBy({ userId:usreId, status:"Active" });
+        if(volunteer){
+          return {message: "you can`t volunteer in two oppertunity in same time", status:500}
+
+        }
         if(oppertunity.volunteers >= oppertunity.volunteers_target){
             return {message: "you can`t volunteer above oppertunity target", status:500}
         }
         oppertunity.volunteers = oppertunity.volunteers + 1
         await this.oppertunityRepository.save(oppertunity)
         const result = await this.volunteerRepository.save(data);
-        user.volunteers = user.volunteers + 1;
-        await this.userRepository.save(user)
+          user.volunteers = user.volunteers + 1;
+          await this.userRepository.save(user)
         return result;
         // return campaign
       }
     
       async findOne(id: string) {
         const result = await this.volunteerRepository.findOneBy({ id });
-        console.log(result);
         return result;
       }
     
