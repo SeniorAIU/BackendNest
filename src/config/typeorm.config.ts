@@ -1,12 +1,14 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export const TypeOrmConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: 'localhost',
+  host: process.env.DB_HOST,
   port: 5432,
-  username: 'postgres',
-  password: '12345',
-  database: 'postgres',
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: true,
 };
@@ -14,11 +16,11 @@ export const TypeOrmConfig: TypeOrmModuleOptions = {
 export const configuration = async () => {
   return {
     DATABASE_CONNECTION: {
-      host: 'localhost',
+      host: process.env.DB_HOST,
       port: 5432,
-      username: 'postgres',
-      password: '12345',
-      database: 'postgres',
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
     },
   };
 };

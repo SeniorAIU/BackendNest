@@ -23,6 +23,7 @@ import { MulterModule } from '@nestjs/platform-express';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
+      envFilePath: '.env', // Point to your .env file
     }),
     TypeOrmModule.forRoot(TypeOrmConfig),
     MulterModule.register({

@@ -49,10 +49,10 @@ export class User {
   @Column({ default: 0, nullable: true })
   amountDonate: number;
 
-  @Column({default:"MALE"})
+  @Column()
   address: string;
 
-  @Column()
+  @Column({default:"MALE"})
   gender: string;
 
   @Column()
