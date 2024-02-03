@@ -37,7 +37,7 @@ export class ORG {
   @Column()
   image: string;
 
-  @Column()
+  @Column({default:"Pending"})
   status: string;
 
   @Column({ name: 'institute_number' })
