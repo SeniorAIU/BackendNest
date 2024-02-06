@@ -6,6 +6,9 @@ import { Campaign } from 'src/campaign/entities/compaign.entity';
 import { Transaction } from 'src/transaction/entities/transaction.entity';
 import { HttpService } from '@nestjs/axios';
 import { map } from 'rxjs';
+import { AuthenticationDetails, CognitoUser, CognitoUserAttribute, CognitoUserPool, CognitoUserSession } from 'amazon-cognito-identity-js';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export type Userd = any;
 
@@ -20,13 +23,57 @@ export class UserService {
     @Inject('TRANSACTION_REPOSITORY')
     private transactionRepository: Repository<Transaction>, 
   ) {}
+  private poolData = {
+    UserPoolId: process.env.AWS_COGNITO_USER_POOL_ID,
+    ClientId: process.env.AWS_COGNITO_CLIENT_ID,
+  };
+  private userPool = new CognitoUserPool(this.poolData);
+
   getUsers(): any {
     return this.userRepository.find();
   }
 
+  verifyEmail(email: string , code: string): any {
+    const userData = {
+      Username: email,
+      Pool: this.userPool,
+    };
+    console.log(userData)
+    const cognitoUser = new CognitoUser(userData);
+
+    return new Promise((resolve, reject) => {
+      cognitoUser.confirmRegistration(code, true, (err, result) => {
+        if (err) {
+          reject(err.message || 'Error verifying email');
+        } else {
+          resolve('Email verified successfully');
+          return this.userRepository.update({email:email}, {status:"Approved"});
+        }
+      });
+    })
+    // return this.userRepository.find();
+  }
+
   async createUsers(data: UserDto): Promise<any> {
-    const user = await this.userRepository.save(data);
-    return user;
+    const attributeList = [
+      new CognitoUserAttribute({ Name: 'email', Value: data.email }),
+      new CognitoUserAttribute({ Name: 'name', Value: data.name }),
+      new CognitoUserAttribute({ Name: 'phone_number', Value: data.phoneNumber }),
+      new CognitoUserAttribute({ Name: 'address', Value: data.address }),
+    ];
+    const username = data.email
+    return new Promise((resolve, reject) => {
+      this.userPool.signUp(username, data.password, attributeList, null, async (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result.user);
+          await this.userRepository.save(data);
+        }
+      });
+    });
+    // const user = await this.userRepository.save(data);
+    // return user;
   }
 
   findOneby(data: any) {

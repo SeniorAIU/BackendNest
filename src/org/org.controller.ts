@@ -6,9 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { OrgDto, UpdateOrgDto } from 'src/org/dto/org.dto';
 import { OrgService } from './org.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('org')
 export class OrgController {
@@ -43,5 +46,11 @@ export class OrgController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.orgService.delete(id);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    return this.orgService.uploadFile(file);
   }
 }

@@ -58,7 +58,7 @@ export class User {
   @Column()
   country: string;
 
-  @Column()
+  @Column({default:"Pending"})
   status: string;
 
   @Column({default:0})

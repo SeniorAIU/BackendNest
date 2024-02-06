@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto, UserDto } from './dto/user.dto';
@@ -53,5 +54,15 @@ export class UserController {
   @Post(':id/campaign/:campid/Donation')
   donation(@Param('id') id: string, @Param('campid') campid: string,@Body() data:any) {
     return this.userService.donation(id,campid, data);
+  }
+
+  @Get('verifyEmail/:username/:code')
+  async verifyEmail(@Param('username') username: string, @Param('code') code: string) {
+    try {
+      const result = await this.userService.verifyEmail(username, code);
+      return { success: true, message: result };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
   }
 }

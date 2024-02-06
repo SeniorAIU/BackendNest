@@ -44,7 +44,7 @@ export class UserDto {
   @IsOptional()
   fakeName: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsIn(['Approved', 'Rejected', 'Pending'])
   status: string;
 }
