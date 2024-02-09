@@ -47,11 +47,11 @@ export class TransactionService {
         }
         if(transaction[i].cartId){
           transaction[i].status = "Approved"
-          await this.transactionRepository.save(transaction[i])
           const cartId = transaction[i].cartId
           const userId = transaction[i].userId
           await this.transactionRepository.save(transaction[i])
           const cart = await this.cartRepository.findOneBy({id:cartId})
+          console.log(cart.orders.length)
           for (let i = 0; i < cart.orders.length; i++) {
             console.log("order")
             console.log(cart.orders[i])
@@ -66,6 +66,7 @@ export class TransactionService {
           await this.userRepository.save(user)
           cart.status = "Approved"
           await this.cartRepository.save(cart)
+          console.log(transaction[i].status)
         }
       }
     }

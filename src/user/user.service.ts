@@ -113,6 +113,8 @@ export class UserService {
     //   await this.campaingRepository.save(campaign)
     //   return{message:"You on Target amount ", status:500}
     // }
+    const amountDonate = data.amount
+    const amountDonation = parseInt(amountDonate, 10);
     if(!user || !campaign){
       return{message:"Error Data", status:500}
     }
@@ -121,7 +123,7 @@ export class UserService {
       console.log(transaction)
       return{message:"You have Transaction not Approved ", status:500}
     }
-    if(campaign.target < (campaign.donation + data.amount)){
+    if(campaign.target < (campaign.donation + amountDonation)){
       return{message:`You amount Above the Campaign Target, Donation still: ${campaign.target - campaign.donation}`, status:500}
     }
     const dataFatora = {
