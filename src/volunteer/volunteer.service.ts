@@ -29,10 +29,10 @@ export class VolunteerService {
         const volunteer = await this.volunteerRepository.findOneBy({ userId:usreId, status:"Active" });
         const volunteerPending = await this.volunteerRepository.findOneBy({ userId:usreId, status:"Pending" });
         if(volunteerPending){
-          return {message: "you volunteer but not start now", status:500}
+          throw new Error("you volunteer but not start now");
         }
         if(volunteer){
-          return {message: "you can`t volunteer in two oppertunity in same time", status:500}
+          throw new Error("you can`t volunteer in two oppertunity in same time");
         }
         if(oppertunity.volunteers >= oppertunity.volunteers_target){
             return {message: "you can`t volunteer above oppertunity target", status:500}
