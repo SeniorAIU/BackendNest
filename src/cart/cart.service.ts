@@ -94,7 +94,7 @@ export class CartService {
     if ((orderData.amount + order.Buys) > order.amount) {
       return { message: `ERROR: Big Quantity in this order ${order.amount - order.Buys }` }
     }
-    order.Buys = order.Buys + orderData.amount
+    // order.Buys = order.Buys + orderData.amount
     cart.orders.push(data)
     await this.CartRepository.save(cart)
     await this.orderReopsitory.save(order)
@@ -129,7 +129,6 @@ export class CartService {
       "amount": totalAmount
     }
     const result = await this.Fatore(data)
-    console.log(result)
     if (result.ErrorMessage == "Success") {
       for (let i = 0; i < cart.orders.length; i++) {
         // const order = await this.orderReopsitory.findOneBy({ id: cart.orders[i].id })

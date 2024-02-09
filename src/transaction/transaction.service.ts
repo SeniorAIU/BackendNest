@@ -26,7 +26,7 @@ export class TransactionService {
     private userRepository: Repository<User>
   ) { }
 
-  @Cron(CronExpression.EVERY_30_SECONDS)
+  @Cron(CronExpression.EVERY_MINUTE)
   async updadteCampaignStatuses() {
     const transaction = await this.transactionRepository.find();
     for (let i = 0; i < transaction.length; i++) {
@@ -39,7 +39,7 @@ export class TransactionService {
           const userId = transaction[i].userId
           const campaign = await this.campaginRepository.findOneBy({ id: campId })
           const user = await this.userRepository.findOneBy({ id: userId })
-          campaign.donation = campaign.donation + transaction[i].amount
+          campaign.amount = campaign.amount + transaction[i].amount
           user.amountDonate = user.amountDonate + transaction[i].amount;
           await this.campaginRepository.save(campaign)
           await this.userRepository.save(user)
@@ -47,20 +47,23 @@ export class TransactionService {
         }
         if(transaction[i].cartId){
           transaction[i].status = "Approved"
+          await this.transactionRepository.save(transaction[i])
           const cartId = transaction[i].cartId
           const userId = transaction[i].userId
           await this.transactionRepository.save(transaction[i])
           const cart = await this.cartRepository.findOneBy({id:cartId})
           for (let i = 0; i < cart.orders.length; i++) {
+            console.log("order")
+            console.log(cart.orders[i])
             const order = await this.orderReopsitory.findOneBy({ id: cart.orders[i].id })
             order.Buys = order.Buys + cart.orders[i].amount
             await this.orderReopsitory.save(order)
-            const user = await this.userRepository.findOneBy({id:userId})
-            user.amountDonate = user.amountDonate + transaction[i].amount
-            await this.userRepository.save(user)
-
-
           }
+          console.log('transaction[i]')
+          console.log(transaction[i])
+          const user = await this.userRepository.findOneBy({id:userId})
+          user.amountDonate = user.amountDonate + transaction[i].amount
+          await this.userRepository.save(user)
           cart.status = "Approved"
           await this.cartRepository.save(cart)
         }
