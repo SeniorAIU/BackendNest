@@ -75,7 +75,7 @@ export class CreateCampaignDto {
 
   @IsNotEmpty()
   @IsString()
-  feedback: string;
+  description: string;
 
   @IsOptional()
   @IsNumber()

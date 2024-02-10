@@ -64,8 +64,8 @@ export class Campaign {
   @Column()
   address: string;
 
-  @Column()
-  feedback: string;
+  @Column({nullable: true, default:""})
+  description: string;
 
   @Column()
   rate: number;
