@@ -12,10 +12,10 @@ export class CartController {
       return this.cartService.getCart();
     }
 
-    // @Get('SearchOrderBuys/order/:id')
-    // SearchOrderBuys(@Param('id') id: string) {
-    //   return this.cartService.SearchOrderBuys(id);
-    // }
+    @Get('SearchOrderBuys/order/:id')
+    SearchOrderBuys(@Param('id') id: string) {
+      return this.cartService.SearchOrderBuys(id);
+    }
   
     @Get(':id')
     findOne(@Param('id') id: string) {

@@ -29,33 +29,33 @@ export class CartService {
     return result;
   }
 
-  async createCart(data: CartDto,userId: string): Promise<any> {
+  async createCart(data: CartDto, userId: string): Promise<any> {
     const cart = await this.CartRepository.findOneBy({ userId: userId, status: "Pending" });
     console.log(cart)
     if (!cart) {
       const order = await this.orderReopsitory.findOneBy({ id: data.orders[0].id })
 
-      const CartData={
+      const CartData = {
         userId,
-        orders:data.orders,
+        orders: data.orders,
         amount: data.orders[0].amount,
         totalPrice: order.price * data.orders[0].amount
       }
       const cartData = await this.CartRepository.save(CartData);
       return { data: cartData, message: "New Cart", status: 200 };
-    }  
+    }
     const orderData = {
       id: data.orders[0].id,
       amount: data.orders[0].amount,
     };
     const order = await this.orderReopsitory.findOneBy({ id: data.orders[0].id })
     for (let i = 0; i < cart.orders.length; i++) {
-      if(cart.orders[i].id == data.orders[0].id){
+      if (cart.orders[i].id == data.orders[0].id) {
         cart.totalPrice = cart.totalPrice + (order.price * data.orders[0].amount)
         cart.orders[i].amount = cart.orders[i].amount + data.orders[0].amount
         cart.amount = cart.amount + data.orders[0].amount
         await this.CartRepository.save(cart);
-        return {message: "Order is exist and i will add quantity", data:cart}
+        return { message: "Order is exist and i will add quantity", data: cart }
       }
     }
     cart.totalPrice = cart.totalPrice + (order.price * data.orders[0].amount)
@@ -66,7 +66,7 @@ export class CartService {
   }
 
   async findOne(id: string) {
-    const cart = await this.CartRepository.findBy({ userId: id, status:"Pending" });
+    const cart = await this.CartRepository.findBy({ userId: id, status: "Pending" });
     return cart;
   }
 
@@ -83,16 +83,16 @@ export class CartService {
     return this.CartRepository.update(id, updateCartDto);
   }
 
-  async addOrderToCart(id: string, orderData : any) {
+  async addOrderToCart(id: string, orderData: any) {
     const cart = await this.CartRepository.findOneBy({ id });
     console.log(cart)
-    const data =  {
+    const data = {
       "id": orderData.id,
-      "amount":orderData.amount 
+      "amount": orderData.amount
     }
     const order = await this.orderReopsitory.findOneBy({ id: orderData.id })
     if ((orderData.amount + order.Buys) > order.amount) {
-      return { message: `ERROR: Big Quantity in this order ${order.amount - order.Buys }` }
+      return { message: `ERROR: Big Quantity in this order ${order.amount - order.Buys}` }
     }
     // order.Buys = order.Buys + orderData.amount
     cart.orders.push(data)
@@ -101,11 +101,26 @@ export class CartService {
 
     // return this.CartRepository.update(id, orderAmoujnt);
   }
-  
+
   delete(id: string) {
     return this.CartRepository.delete(id);
   }
 
+  async SearchOrderBuys(id: string) {
+    const cart = await this.CartRepository.find();
+    const arr = [];
+    const promises = cart.map(async (cartItem) => {
+      await Promise.all(cartItem.orders.map(async (order) => {
+        if (order.id === id) {
+          arr.push({ userId: cartItem.userId, amount: order.amount });
+        }
+      }));
+    });
+
+    // Wait for all promises to resolve
+    await Promise.all(promises);
+    return arr;
+  }
   deleteItemFromCart(orderId: string) {
     // return this.CartRepository.delete({ orderId });
   }
@@ -142,9 +157,9 @@ export class CartService {
           "amount": totalAmount,
           "date": "2023-10-01 00:00:00",
           "userId": id,
-          "cartId":cartId,
-          "paymentId":result.Data.paymentId,
-          "status":"Pending"
+          "cartId": cartId,
+          "paymentId": result.Data.paymentId,
+          "status": "Pending"
         }
         console.log(transactionData)
         await this.transactionRepository.save(transactionData)
