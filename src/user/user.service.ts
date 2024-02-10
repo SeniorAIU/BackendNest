@@ -133,10 +133,6 @@ export class UserService {
     }
     const result = await this.Fatore(dataFatora)
     if(result.ErrorMessage == "Success"){
-      // user.amountDonate = user.amountDonate + data.amount
-      // await this.userRepository.save(user)
-      // campaign.donation = campaign.donation + data.amount
-      // await this.campaingRepository.save(campaign)
       const transactionData = {
         "amount": data.amount,
         "date": "2023-10-01 00:00:00",

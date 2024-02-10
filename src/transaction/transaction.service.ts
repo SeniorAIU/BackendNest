@@ -25,50 +25,62 @@ export class TransactionService {
     @Inject('USER_REPOSITORY')
     private userRepository: Repository<User>
   ) { }
+  private isRunning: boolean = false;
 
   @Cron(CronExpression.EVERY_MINUTE)
   async updadteCampaignStatuses() {
-    const transaction = await this.transactionRepository.find();
-    for (let i = 0; i < transaction.length; i++) {
-      const result = await this.Fatore(transaction[i].paymentId)
-      if (result.Data.status == "A" && transaction[i].status == "Pending") {
-        console.log(1)
-        if (transaction[i].campId) {
-          transaction[i].status = "Approved"
-          const campId = transaction[i].campId
-          const userId = transaction[i].userId
-          const campaign = await this.campaginRepository.findOneBy({ id: campId })
-          const user = await this.userRepository.findOneBy({ id: userId })
-          campaign.amount = campaign.amount + transaction[i].amount
-          user.amountDonate = user.amountDonate + transaction[i].amount;
-          await this.campaginRepository.save(campaign)
-          await this.userRepository.save(user)
-          await this.transactionRepository.save(transaction[i])
-        }
-        if(transaction[i].cartId){
-          transaction[i].status = "Approved"
-          const cartId = transaction[i].cartId
-          const userId = transaction[i].userId
-          await this.transactionRepository.save(transaction[i])
-          const cart = await this.cartRepository.findOneBy({id:cartId})
-          console.log(cart.orders.length)
-          for (let i = 0; i < cart.orders.length; i++) {
-            console.log("order")
-            console.log(cart.orders[i])
-            const order = await this.orderReopsitory.findOneBy({ id: cart.orders[i].id })
-            order.Buys = order.Buys + cart.orders[i].amount
-            await this.orderReopsitory.save(order)
+    if (this.isRunning) {
+      console.log("Function is already running, skipping execution.");
+      return;
+    }
+    this.isRunning = true;
+    try {
+      const transaction = await this.transactionRepository.find();
+      for (let i = 0; i < transaction.length; i++) {
+        const result = await this.Fatore(transaction[i].paymentId)
+        if (result.Data.status == "A" && transaction[i].status == "Pending") {
+          console.log(1)
+          if (transaction[i].campId) {
+            transaction[i].status = "Approved"
+            const campId = transaction[i].campId
+            const userId = transaction[i].userId
+            const campaign = await this.campaginRepository.findOneBy({ id: campId })
+            const user = await this.userRepository.findOneBy({ id: userId })
+            campaign.donation = campaign.donation + transaction[i].amount
+            user.amountDonate = user.amountDonate + transaction[i].amount;
+            await this.campaginRepository.save(campaign)
+            await this.userRepository.save(user)
+            await this.transactionRepository.save(transaction[i])
           }
-          console.log('transaction[i]')
-          console.log(transaction[i])
-          const user = await this.userRepository.findOneBy({id:userId})
-          user.amountDonate = user.amountDonate + transaction[i].amount
-          await this.userRepository.save(user)
-          cart.status = "Approved"
-          await this.cartRepository.save(cart)
-          console.log(transaction[i].status)
+          if(transaction[i].cartId){
+            transaction[i].status = "Approved"
+            const cartId = transaction[i].cartId
+            const userId = transaction[i].userId
+            
+            await this.transactionRepository.save(transaction[i])
+            const cart = await this.cartRepository.findOneBy({id:cartId})
+            console.log(cart.orders.length)
+            for (let i = 0; i < cart.orders.length; i++) {
+              console.log("order")
+              console.log(cart.orders[i])
+              const order = await this.orderReopsitory.findOneBy({ id: cart.orders[i].id })
+              order.Buys = order.Buys + cart.orders[i].amount
+              await this.orderReopsitory.save(order)
+            }
+            console.log('transaction[i]')
+            console.log(transaction[i])
+            const user = await this.userRepository.findOneBy({id:userId})
+            user.amountDonate = user.amountDonate + transaction[i].amount
+            await this.userRepository.save(user)
+            cart.status = "Approved"
+            await this.cartRepository.save(cart)
+            console.log(transaction[i].status)
+          }
         }
       }
+    }finally{
+      this.isRunning = false;
+
     }
   }
 

@@ -128,13 +128,13 @@ export class CartService {
   async Buys(id: any) {
     const cart = await this.CartRepository.findOneBy({ userId: id, status: "Pending" });
     if (!cart) {
-      return { message: 'You don`t have item in this cart', status: 500 }
+      throw Error("You don`t have item in this cart")
     }
     let totalAmount = 0
     for (let i = 0; i < cart.orders.length; i++) {
       const order = await this.orderReopsitory.findOneBy({ id: cart.orders[i].id })
       if ((cart.orders[i].amount + order.Buys) >= order.amount) {
-        return { message: `ERROR: Big Quantity in this order ${cart.orders[i].id}` }
+        throw Error(`ERROR: Big Quantity in this order ${cart.orders[i].id}`)
       }
       totalAmount = totalAmount + cart.orders[i].amount * order.price;
     }
@@ -146,12 +146,6 @@ export class CartService {
     const result = await this.Fatore(data)
     if (result.ErrorMessage == "Success") {
       for (let i = 0; i < cart.orders.length; i++) {
-        // const order = await this.orderReopsitory.findOneBy({ id: cart.orders[i].id })
-        // order.Buys = order.Buys + cart.orders[i].amount
-        // await this.orderReopsitory.save(order)
-        // const user = await this.userReopsitory.findOneBy({id})
-        // user.amountDonate = user.amountDonate + totalAmount
-        // await this.userReopsitory.save(user)
         const cartId = cart.id
         const transactionData = {
           "amount": totalAmount,
@@ -161,9 +155,7 @@ export class CartService {
           "paymentId": result.Data.paymentId,
           "status": "Pending"
         }
-        console.log(transactionData)
         await this.transactionRepository.save(transactionData)
-        // await this.update(cartId,{status: "Approved"})
       }
     }
     else {
